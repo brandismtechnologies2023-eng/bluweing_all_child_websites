@@ -1112,7 +1112,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
       return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c];
     });
   }
-  fetch('/api/blog').then(function(r){ return r.ok ? r.json() : []; }).then(function(posts){
+  fetch('/api/blog', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : []; }).then(function(posts){
     if (!Array.isArray(posts) || !posts.length) return;
     var published = posts.filter(function(p){ return p.published !== false; });
     grid.innerHTML = published.map(function(p){

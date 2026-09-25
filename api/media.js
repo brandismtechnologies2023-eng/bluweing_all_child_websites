@@ -7,6 +7,7 @@ module.exports = async (req, res) => {
 
   try {
     if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'no-store');
       const { data: siteImages } = await readJson('data/media-index.json', []);
       const media = siteImages.map((m) => ({ url: m.url, source: 'site' }));
 

@@ -1215,7 +1215,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 (function(){
   var grid = document.getElementById('jobs-grid');
   if (!grid) return;
-  fetch('/api/careers').then(function(r){ return r.ok ? r.json() : []; }).then(function(jobs){
+  fetch('/api/careers', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : []; }).then(function(jobs){
     if (!Array.isArray(jobs) || !jobs.length) return;
     var active = jobs.filter(function(j){ return j.active !== false; });
     if (!active.length) return;
@@ -1561,7 +1561,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 
   // "Apply for" — populate from current openings
   var roleSel = document.getElementById('ja-role');
-  fetch('/api/careers').then(function(r){ return r.ok ? r.json() : []; }).then(function(jobs){
+  fetch('/api/careers', { cache: 'no-store' }).then(function(r){ return r.ok ? r.json() : []; }).then(function(jobs){
     var active = Array.isArray(jobs) ? jobs.filter(function(j){ return j.active !== false; }) : [];
     var options = active.map(function(j){ return '<option>' + j.title.replace(/</g,'&lt;') + '</option>'; }).join('');
     roleSel.innerHTML = '<option value="">Select a role</option>' + options;

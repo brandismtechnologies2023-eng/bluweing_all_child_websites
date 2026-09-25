@@ -14,6 +14,7 @@ module.exports = async (req, res) => {
     const prefix = `submissions/${formType}/`;
 
     if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'no-store');
       const items = [];
       let cursor;
       do {

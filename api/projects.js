@@ -22,6 +22,7 @@ async function readBody(req) {
 module.exports = async (req, res) => {
   try {
     if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'no-store');
       const { data: items } = await readJson(PATH, []);
       const { slug, id } = req.query || {};
       if (slug) {

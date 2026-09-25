@@ -29,7 +29,7 @@
 
   async function api(path, opts) {
     opts = opts || {};
-    var res = await fetch(path, Object.assign({ credentials: 'include' }, opts, {
+    var res = await fetch(path, Object.assign({ credentials: 'include', cache: 'no-store' }, opts, {
       headers: Object.assign({ 'Content-Type': 'application/json' }, opts.headers || {}),
     }));
     if (res.status === 401) {
