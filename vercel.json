@@ -1,0 +1,33 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": { "re": "sygnific" } }],
+      "destination": "/sygnificinfra/sygnific-infra.html"
+    },
+    {
+      "source": "/:path((?!api/).*)",
+      "has": [{ "type": "host", "value": { "re": "sygnific" } }],
+      "destination": "/sygnificinfra/:path"
+    },
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": { "re": "bhaarat" } }],
+      "destination": "/bhaaratprecast/bhaarat-precast.html"
+    },
+    {
+      "source": "/:path((?!api/).*)",
+      "has": [{ "type": "host", "value": { "re": "bhaarat" } }],
+      "destination": "/bhaaratprecast/:path"
+    },
+    {
+      "source": "/",
+      "destination": "/bluewing/index.html"
+    },
+    {
+      "source": "/:path((?!api/).*)",
+      "destination": "/bluewing/:path"
+    }
+  ]
+}

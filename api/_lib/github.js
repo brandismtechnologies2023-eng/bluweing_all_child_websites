@@ -1,5 +1,5 @@
 const OWNER = process.env.GITHUB_OWNER || 'brandismtechnologies2023-eng';
-const REPO = process.env.GITHUB_REPO || 'bluewing-new';
+const REPO = process.env.GITHUB_REPO || 'bluweing_all_child_websites';
 const BRANCH = process.env.GITHUB_BRANCH || 'main';
 const API = 'https://api.github.com';
 
