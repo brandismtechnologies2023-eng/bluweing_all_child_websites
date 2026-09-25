@@ -1,5 +1,16 @@
 [
   {
+    "id": "mugx4gwpytpyu",
+    "title": "test...",
+    "tag": "Quality Assurance",
+    "location": "Ahmedabad",
+    "type": "Full-time",
+    "description": "<p>test...</p>",
+    "applyEmail": "careers@bluewingconstruction.com",
+    "date": "2026-09-25",
+    "active": true
+  },
+  {
     "id": "seed-qa-qc-engineer",
     "title": "QA / QC Engineer",
     "tag": "Quality Assurance",
