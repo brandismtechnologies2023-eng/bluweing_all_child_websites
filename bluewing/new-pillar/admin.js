@@ -972,6 +972,7 @@
     'project-enquiry': ['name', 'company', 'email', 'phone', 'interest'],
     'vendor-registration': ['company', 'name', 'email', 'phone', 'category', 'city', 'gst', 'years', 'website'],
     'job-application': ['name', 'email', 'phone', 'company', 'applyFor', 'resumeUrl'],
+    'sygnific-enquiry': ['name', 'company', 'email', 'phone'],
   };
 
   $all('.subtab-item').forEach(function (btn) {
@@ -1011,7 +1012,7 @@
     });
   }
 
-  var enquiryData = { 'project-enquiry': [], 'vendor-registration': [], 'job-application': [] };
+  var enquiryData = { 'project-enquiry': [], 'vendor-registration': [], 'job-application': [], 'sygnific-enquiry': [] };
 
   async function loadEnquiries() {
     try {
@@ -1035,7 +1036,14 @@
     } catch (err) {
       $('#enquiries-job-list').innerHTML = '<div class="empty-note">' + esc(err.message) + '</div>';
     }
-    ['project-enquiry', 'vendor-registration', 'job-application'].forEach(updateExportState);
+    try {
+      var sygnificEntries = await api('/api/submissions?type=sygnific-enquiry');
+      enquiryData['sygnific-enquiry'] = sygnificEntries;
+      renderEnquiries($('#enquiries-sygnific-list'), sygnificEntries, 'sygnific-enquiry');
+    } catch (err) {
+      $('#enquiries-sygnific-list').innerHTML = '<div class="empty-note">' + esc(err.message) + '</div>';
+    }
+    ['project-enquiry', 'vendor-registration', 'job-application', 'sygnific-enquiry'].forEach(updateExportState);
   }
 
   function getDateFilter(formType) {
@@ -1105,6 +1113,7 @@
       'vendor-registration': 'Vendor Registrations',
       'job-application': 'Job Applications',
       'project-enquiry': 'Project Enquiries',
+      'sygnific-enquiry': 'Sygnific Infra Enquiries',
     };
     var doc = new window.jspdf.jsPDF({ orientation: 'landscape' });
     doc.setFontSize(14);

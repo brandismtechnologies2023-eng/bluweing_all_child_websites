@@ -110,6 +110,7 @@
         <button class="subtab-item is-active" data-subtab="project-enquiry">Project enquiry</button>
         <button class="subtab-item" data-subtab="vendor-registration">Vendor registration</button>
         <button class="subtab-item" data-subtab="job-application">Job application</button>
+        <button class="subtab-item" data-subtab="sygnific-enquiry">Sygnific Infra enquiry</button>
       </div>
       <div class="subtab-panel is-active" id="subtab-project-enquiry">
         <div class="export-row">
@@ -152,6 +153,20 @@
           <button class="btn btn-sm" data-export-pdf="job-application">Export PDF</button>
         </div>
         <div class="list" id="enquiries-job-list"></div>
+      </div>
+      <div class="subtab-panel" id="subtab-sygnific-enquiry">
+        <div class="export-row">
+          <select class="export-date-filter" data-date-filter="sygnific-enquiry">
+            <option value="all">All time</option>
+            <option value="today">Today</option>
+            <option value="7d">Last 7 days</option>
+            <option value="30d">Last 30 days</option>
+            <option value="month">This month</option>
+          </select>
+          <button class="btn btn-sm" data-export-csv="sygnific-enquiry">Export Excel (CSV)</button>
+          <button class="btn btn-sm" data-export-pdf="sygnific-enquiry">Export PDF</button>
+        </div>
+        <div class="list" id="enquiries-sygnific-list"></div>
       </div>
     </section>
 
@@ -397,6 +412,6 @@
 
 <div class="toast" id="toast" hidden></div>
 
-<script src="/new-pillar/admin.js?v=6"></script>
+<script src="/new-pillar/admin.js?v=7"></script>
 </body>
 </html>
