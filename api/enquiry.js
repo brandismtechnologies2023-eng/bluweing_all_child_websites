@@ -9,6 +9,12 @@ const REQUIRED_FIELDS = {
   'project-enquiry': ['name', 'email', 'phone', 'interest'],
   'vendor-registration': ['company', 'name', 'email', 'phone', 'category', 'city'],
   'job-application': ['name', 'email', 'phone', 'company', 'applyFor'],
+  'sygnific-enquiry': ['name', 'company', 'email', 'phone', 'message'],
+};
+
+// Sygnific Infra enquiries go to Sygnific's own inboxes instead of SMTP_TO.
+const RECIPIENTS = {
+  'sygnific-enquiry': process.env.SYGNIFIC_SMTP_TO || 'info@sygnificinfra.com, mayur.d@sygnificinfra.com',
 };
 
 const LABELS = {
@@ -52,7 +58,7 @@ module.exports = async (req, res) => {
 
   try {
     const body = await readBody(req);
-    const formType = ['vendor-registration', 'job-application'].includes(body.formType) ? body.formType : 'project-enquiry';
+    const formType = ['vendor-registration', 'job-application', 'sygnific-enquiry'].includes(body.formType) ? body.formType : 'project-enquiry';
     const required = REQUIRED_FIELDS[formType];
 
     for (const field of required) {
@@ -118,12 +124,14 @@ module.exports = async (req, res) => {
           'vendor-registration': 'New vendor registration',
           'job-application': 'New job application',
           'project-enquiry': 'New project enquiry',
+          'sygnific-enquiry': 'New Sygnific Infra enquiry',
         };
         const title = titles[formType];
         await sendMail({
           subject: `${title} — ${entry.fields.name || entry.fields.company || 'BlueWing website'}`,
           html: `<h2>${title}</h2><table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">${rows}</table>`,
           replyTo: entry.fields.email,
+          to: RECIPIENTS[formType],
         });
       } catch (err) {
         emailError = err.message;

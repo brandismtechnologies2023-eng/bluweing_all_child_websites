@@ -1140,7 +1140,7 @@
   /* ---------- company switcher (sidebar logo) ---------- */
   var COMPANIES = {
     bluewing: { logo: '/assets/BlueWing-logo-2026.svg', name: 'BlueWing Group' },
-    sygnificinfra: { logo: 'https://bluewing.brandismtechnologies.in/wp-content/uploads/2026/06/sy-new-logo.png', name: 'Sygnific Infra' },
+    sygnificinfra: { logo: 'https://faak0js5bca1hkm3.public.blob.vercel-storage.com/uploads/1790589781391-z23if3-sy-new-logo-flCmjGVEZAr2ws3v25JHq9RGadYQfk.png', name: 'Sygnific Infra' },
     bhaaratprecast: { logo: 'https://bluewing.brandismtechnologies.in/wp-content/uploads/2026/06/bh-new-logo.png', name: 'Bhaarat Precast' },
   };
 

@@ -16,8 +16,8 @@ function getTransport() {
   });
 }
 
-async function sendMail({ subject, html, text, replyTo }) {
-  const to = process.env.SMTP_TO || process.env.SMTP_USER;
+async function sendMail({ subject, html, text, replyTo, to: toOverride }) {
+  const to = toOverride || process.env.SMTP_TO || process.env.SMTP_USER;
   const from = process.env.SMTP_FROM || process.env.SMTP_USER;
   const transport = getTransport();
   await transport.sendMail({ from, to, subject, html, text, replyTo });

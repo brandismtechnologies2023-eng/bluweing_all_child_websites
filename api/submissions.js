@@ -10,7 +10,7 @@ module.exports = async (req, res) => {
     }
 
     const { type } = req.query || {};
-    const formType = ['vendor-registration', 'job-application'].includes(type) ? type : 'project-enquiry';
+    const formType = ['vendor-registration', 'job-application', 'sygnific-enquiry'].includes(type) ? type : 'project-enquiry';
     const prefix = `submissions/${formType}/`;
 
     if (req.method === 'GET') {
