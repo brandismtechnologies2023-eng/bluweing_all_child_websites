@@ -13,11 +13,13 @@ function headers() {
   };
 }
 
-// Short-lived in-memory cache, keyed by path. Warm serverless instances reuse
-// this across invocations, cutting GitHub API calls and giving us a stale
-// fallback to serve from if GitHub has a transient hiccup.
-const CACHE_TTL_MS = 20 * 1000;
-const cache = new Map(); // path -> { result, at }
+// Tiny in-memory cache, keyed by path. It only merges bursts of requests; after
+// 2s every read asks GitHub again with the stored ETag, so admin changes show up
+// on the next page refresh. An unchanged file comes back as a 304, which is fast
+// and does not count against the GitHub rate limit. The cached copy is also the
+// stale fallback if GitHub has a transient hiccup.
+const CACHE_TTL_MS = 2 * 1000;
+const cache = new Map(); // path -> { result, at, etag }
 
 // Reads a JSON file from the repo. Returns { data, sha }. If missing, returns { data: fallback, sha: null }.
 async function readJson(path, fallback, useCache = true) {
@@ -27,10 +29,16 @@ async function readJson(path, fallback, useCache = true) {
   }
 
   try {
+    const reqHeaders = headers();
+    if (cached && cached.etag) reqHeaders['If-None-Match'] = cached.etag;
     const res = await fetch(
       `${API}/repos/${OWNER}/${REPO}/contents/${path}?ref=${BRANCH}`,
-      { headers: headers() }
+      { headers: reqHeaders }
     );
+    if (res.status === 304 && cached) {
+      cached.at = Date.now();
+      return cached.result;
+    }
     if (res.status === 404) {
       const result = { data: fallback, sha: null };
       cache.set(path, { result, at: Date.now() });
@@ -40,7 +48,7 @@ async function readJson(path, fallback, useCache = true) {
     const json = await res.json();
     const content = Buffer.from(json.content, 'base64').toString('utf-8');
     const result = { data: JSON.parse(content), sha: json.sha };
-    cache.set(path, { result, at: Date.now() });
+    cache.set(path, { result, at: Date.now(), etag: res.headers.get('etag') });
     return result;
   } catch (err) {
     if (cached) return cached.result; // serve stale rather than fail outright
@@ -64,7 +72,12 @@ async function writeJson(path, data, message) {
     body: JSON.stringify(body),
   });
   if (!res.ok) throw new Error(`GitHub write failed (${res.status}): ${await res.text()}`);
-  return res.json();
+  const json = await res.json();
+  // Remember what we just wrote so this instance serves it straight away.
+  if (json.content && json.content.sha) {
+    cache.set(path, { result: { data, sha: json.content.sha }, at: Date.now() });
+  }
+  return json;
 }
 
 module.exports = { readJson, writeJson };
