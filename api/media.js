@@ -1,8 +1,58 @@
 const { list, del } = require('@vercel/blob');
-const { readJson } = require('./_lib/github');
+const { readJson, writeJson } = require('./_lib/github');
 const { requireAuth } = require('./_lib/auth');
 
+// Company logos set from the admin panel (/api/media?logos). The websites read
+// them publicly; an empty value means "use the logo built into the page".
+const LOGOS_PATH = 'data/logos.json';
+const COMPANIES = ['bluewing', 'sygnificinfra', 'bhaaratprecast'];
+
+function pickLogos(data) {
+  const out = {};
+  COMPANIES.forEach((c) => { out[c] = data && typeof data[c] === 'string' ? data[c] : ''; });
+  return out;
+}
+
+async function logos(req, res) {
+  try {
+    if (req.method === 'GET') {
+      res.setHeader('Cache-Control', 'no-store');
+      const { data } = await readJson(LOGOS_PATH, {});
+      return res.status(200).json(pickLogos(data));
+    }
+    if (!requireAuth(req, res)) return;
+
+    let body = req.body;
+    if (typeof body === 'string') {
+      try { body = JSON.parse(body); } catch (e) { body = {}; }
+    }
+    body = body || {};
+    const company = (req.query || {}).company || body.company;
+    if (!COMPANIES.includes(company)) return res.status(400).json({ error: 'Unknown company' });
+
+    const { data } = await readJson(LOGOS_PATH, {}, false);
+    const current = pickLogos(data);
+
+    if (req.method === 'PUT') {
+      const url = String(body.url || '').trim();
+      if (!url.startsWith('https://')) return res.status(400).json({ error: 'A valid https logo URL is required' });
+      current[company] = url;
+      await writeJson(LOGOS_PATH, current, `admin: update ${company} logo`);
+      return res.status(200).json(current);
+    }
+    if (req.method === 'DELETE') {
+      current[company] = '';
+      await writeJson(LOGOS_PATH, current, `admin: remove ${company} logo`);
+      return res.status(200).json(current);
+    }
+    res.status(405).json({ error: 'Method not allowed' });
+  } catch (err) {
+    res.status(500).json({ error: err.message || 'Server error' });
+  }
+}
+
 module.exports = async (req, res) => {
+  if ((req.query || {}).logos !== undefined) return logos(req, res);
   if (!requireAuth(req, res)) return;
 
   try {

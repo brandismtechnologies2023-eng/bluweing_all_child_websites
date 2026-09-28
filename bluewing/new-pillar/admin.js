@@ -1153,20 +1153,73 @@
     bhaaratprecast: { logo: 'https://bluewing.brandismtechnologies.in/wp-content/uploads/2026/06/bh-new-logo.png', name: 'Bhaarat Precast' },
   };
 
+  // Logos uploaded from here replace the built-in logo on that company's website
+  // (header, mobile menu, footer). Remove falls back to the built-in logo.
+  var customLogos = {};
+
+  function currentCompany() {
+    return COMPANIES[$('#company-switch').value] ? $('#company-switch').value : 'bluewing';
+  }
+
   function setCompany(key) {
-    var co = COMPANIES[key] || COMPANIES.bluewing;
+    if (!COMPANIES[key]) key = 'bluewing';
+    var co = COMPANIES[key];
     var logo = $('#sidebar-logo');
-    logo.src = co.logo;
+    logo.src = customLogos[key] || co.logo;
     logo.alt = co.name;
-    $('#company-switch').value = COMPANIES[key] ? key : 'bluewing';
+    $('#company-switch').value = key;
+    $('#logo-remove-btn').disabled = !customLogos[key];
     try { localStorage.setItem('bw_admin_company', key); } catch (e) {}
+  }
+
+  async function loadLogos() {
+    customLogos = await api('/api/media?logos');
+    setCompany(currentCompany());
   }
 
   $('#company-switch').addEventListener('change', function (e) { setCompany(e.target.value); });
   try { setCompany(localStorage.getItem('bw_admin_company') || 'bluewing'); } catch (e) { setCompany('bluewing'); }
 
+  $('#logo-upload-btn').addEventListener('click', function () { $('#logo-file').click(); });
+
+  $('#logo-file').addEventListener('change', async function (e) {
+    var file = e.target.files[0];
+    e.target.value = '';
+    if (!file) return;
+    if (['image/png', 'image/jpeg', 'image/webp', 'image/svg+xml'].indexOf(file.type) === -1) { toast('Please choose a PNG, JPG, WebP or SVG image', true); return; }
+    var key = currentCompany();
+    var btn = $('#logo-upload-btn');
+    btn.disabled = true;
+    btn.textContent = 'Uploading…';
+    try {
+      var url = await uploadFile(file);
+      customLogos = await api('/api/media?logos', { method: 'PUT', body: JSON.stringify({ company: key, url: url }) });
+      setCompany(key);
+      toast(COMPANIES[key].name + ' logo updated — the website shows it on the next refresh');
+    } catch (err) {
+      toast(err.message, true);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Upload / Edit logo';
+    }
+  });
+
+  $('#logo-remove-btn').addEventListener('click', async function () {
+    var key = currentCompany();
+    if (!customLogos[key]) return;
+    if (!confirm('Remove the uploaded ' + COMPANIES[key].name + ' logo? The website will go back to the original logo.')) return;
+    try {
+      customLogos = await api('/api/media?logos&company=' + key, { method: 'DELETE' });
+      setCompany(key);
+      toast(COMPANIES[key].name + ' logo removed — original logo restored');
+    } catch (err) {
+      toast(err.message, true);
+    }
+  });
+
   /* ---------- init ---------- */
   function initAppData() {
+    loadLogos().catch(function (e) { toast(e.message, true); });
     loadBlog().catch(function (e) { toast(e.message, true); });
     loadProjects().catch(function (e) { toast(e.message, true); });
     loadCareers().catch(function (e) { toast(e.message, true); });

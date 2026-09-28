@@ -1415,5 +1415,42 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 })();
 
 </script>
+<script>
+/* Company logo set from the admin panel; falls back to the logo built into the page. */
+(function (site) {
+  'use strict';
+  var KEY = 'bw_logo_' + site;
+  var originals = Array.prototype.slice.call(document.querySelectorAll('.hdr .brand__mark, .drw .brand__mark, .ftr .ftr__lg'));
+  if (!originals.length) return;
+  var current = originals.slice(), applied = '';
+  function apply(url) {
+    url = url || '';
+    if (url === applied) return;
+    applied = url;
+    current = current.map(function (el, i) {
+      var orig = originals[i], next = orig;
+      if (url) {
+        next = document.createElement('img');
+        next.className = orig.getAttribute('class');
+        next.alt = orig.getAttribute('alt') || orig.getAttribute('aria-label') || '';
+        next.decoding = 'async';
+        next.src = url;
+      }
+      if (next !== el) el.parentNode.replaceChild(next, el);
+      return next;
+    });
+  }
+  try { apply(localStorage.getItem(KEY)); } catch (e) {}
+  fetch('/api/media?logos', { cache: 'no-store' })
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d) return;
+      var url = d[site] || '';
+      try { url ? localStorage.setItem(KEY, url) : localStorage.removeItem(KEY); } catch (e) {}
+      apply(url);
+    })
+    .catch(function () {});
+})('bluewing');
+</script>
 </body>
 </html>

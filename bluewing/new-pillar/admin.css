@@ -39,6 +39,11 @@ label textarea{resize:vertical}
 .brand{margin-bottom:26px;padding:0 6px}
 .brand .brand-logo--dark{width:150px;height:auto;display:block;filter:brightness(0) invert(1)}
 .company-switch{width:100%;margin:0 0 20px;padding:8px 10px;background:#1c2530;color:#fff;border:1px solid #2a3341;border-radius:var(--r);font-weight:600;font-size:13px;cursor:pointer}
+.logo-actions{display:flex;gap:6px;margin:-10px 0 22px}
+.logo-actions .btn{flex:1;padding:6px 8px;font-size:11px;background:#1c2530;color:#c3c9d1;border-color:#2a3341}
+.logo-actions .btn:hover{background:#26303d;color:#fff}
+.logo-actions .btn-danger{color:#ffb4a8}
+.logo-actions .btn:disabled{opacity:.4;cursor:not-allowed}
 .brand span{display:block;font-weight:400;font-size:11px;color:#8b95a3;letter-spacing:.08em;text-transform:uppercase;margin-top:6px}
 .sidebar nav{display:flex;flex-direction:column;gap:4px;flex:1}
 .nav-item{text-align:left;background:transparent;border:none;color:#c3c9d1;padding:11px 12px;border-radius:var(--r);cursor:pointer;font-weight:600;font-size:13px}
