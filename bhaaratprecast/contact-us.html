@@ -554,7 +554,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 /* ── Footer ────────────────────────────────────────────── */
 .ftr{background:var(--paper);color:var(--steel);padding-top:clamp(64px,7vw,100px);
   font-size:var(--fs-sm);border-top:1px solid var(--line)}
-.ftr__t{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.1fr;gap:40px;padding-bottom:54px;
+.ftr__t{display:grid;grid-template-columns:1.6fr 1fr 1.1fr;gap:40px;padding-bottom:54px;
   border-bottom:1px solid var(--line)}
 .ftr__lg{height:38px;width:auto;color:var(--ink);margin-bottom:26px}
 .ftr h4{color:var(--ink);font-family:var(--f-mono);font-size:var(--fs-lbl);letter-spacing:.2em;
@@ -1053,8 +1053,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 
 <div class="rv">
 <div class="ftabs" role="tablist" aria-label="Form type">
-<button class="ftab" role="tab" id="ft-enq" aria-controls="fp-enq" aria-selected="true">Project enquiry</button>
-<button class="ftab" role="tab" id="ft-ven" aria-controls="fp-ven" aria-selected="false">Vendor registration</button>
+<button class="ftab" role="tab" id="ft-enq" aria-controls="fp-enq" aria-selected="true">Product Inquiry</button>
 </div>
 
 <div class="fpanel" id="fp-enq" role="tabpanel" aria-labelledby="ft-enq">
@@ -1075,69 +1074,10 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 </div>
 <span class="field-err">Please enter a valid phone number.</span></div>
 </div>
-<div class="fld"><label for="c-i">Your interest</label>
-<select id="c-i" name="interest" required>
-<option value="">Select an option</option>
-<option>EPC / Turnkey Construction</option>
-<option>Precast Solutions</option>
-<option>Diaphragm Wall Construction</option>
-<option>Careers</option>
-<option>Other</option>
-</select><span class="field-err">Please select an option.</span></div>
 <div class="fld"><label for="c-m">Project details</label><textarea id="c-m" name="message" placeholder="Location, plot area, intended use, target handover date"></textarea></div>
 
 <button class="btn btn--accent" type="submit">Send enquiry <svg><use href="#i-arr"/></svg></button>
 <p class="pform__n" data-note>We reply within two working days. Your details are never shared.</p>
-</form>
-</div>
-
-<div class="fpanel" id="fp-ven" role="tabpanel" aria-labelledby="ft-ven" hidden>
-<form class="form-light" data-enquiry data-form-type="vendor-registration" novalidate>
-<h2 style="font-size:var(--fs-h3);margin-bottom:8px">Vendor registration</h2>
-<p style="color:var(--steel);font-size:var(--fs-sm);margin-bottom:24px">Suppliers, subcontractors and service partners — register to be considered for our approved vendor list.</p>
-
-<div class="frow">
-<div class="fld"><label for="v-co">Company name</label><input id="v-co" name="company" required autocomplete="organization" placeholder="Registered business name"><span class="field-err">Please enter your company name.</span></div>
-<div class="fld"><label for="v-n">Contact person</label><input id="v-n" name="name" required autocomplete="name" placeholder="Full name"><span class="field-err">Please enter a contact person.</span></div>
-</div>
-<div class="frow">
-<div class="fld"><label for="v-e">Work email</label><input id="v-e" name="email" type="email" required autocomplete="email" placeholder="name@company.com"><span class="field-err">Please enter a valid email address.</span></div>
-<div class="fld"><label for="v-p">Phone</label>
-<div class="phone-combo">
-<select id="v-p-cc" name="phoneCode" aria-label="Country code" autocomplete="tel-country-code"></select>
-<input id="v-p" name="phone" type="tel" required autocomplete="tel-national" placeholder="">
-</div>
-<span class="field-err">Please enter a valid phone number.</span></div>
-</div>
-<div class="frow">
-<div class="fld"><label for="v-cat">Category of supply</label>
-<select id="v-cat" name="category" required>
-<option value="">Select a category</option>
-<option>Building materials (cement, steel, aggregates)</option>
-<option>Finishing materials (tiles, paint, joinery)</option>
-<option>MEP — electrical, plumbing, HVAC</option>
-<option>Formwork, scaffolding &amp; shuttering</option>
-<option>Plant, machinery &amp; equipment hire</option>
-<option>Labour &amp; subcontracting services</option>
-<option>Precast &amp; prefabricated elements</option>
-<option>Professional / consultancy services</option>
-<option>Other</option>
-</select><span class="field-err">Please select a category.</span></div>
-<div class="fld"><label for="v-city">City / state</label><input id="v-city" name="city" required autocomplete="address-level2" placeholder="Ahmedabad, Gujarat"><span class="field-err">Please enter a city / state.</span></div>
-</div>
-<div class="frow">
-<div class="fld"><label for="v-gst">GST number</label><input id="v-gst" name="gst" placeholder="24XXXXXXXXXXXZX"></div>
-<div class="fld"><label for="v-yrs">Years in business</label>
-<select id="v-yrs" name="years">
-<option value="">Select</option><option>Less than 2 years</option><option>2–5 years</option>
-<option>5–10 years</option><option>More than 10 years</option>
-</select></div>
-</div>
-<div class="fld"><label for="v-web">Website or catalogue link</label><input id="v-web" name="website" type="url" autocomplete="url" placeholder="https://"></div>
-<div class="fld"><label for="v-m">Products / services offered</label><textarea id="v-m" name="message" placeholder="What you supply, typical order sizes, notable clients and current capacity"></textarea></div>
-
-<button class="btn btn--accent" type="submit">Register as a vendor <svg><use href="#i-arr"/></svg></button>
-<p class="pform__n" data-note>Our procurement team reviews registrations monthly and will contact you if there is a fit.</p>
 </form>
 </div>
 </div>
@@ -1158,7 +1098,7 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 <div class="ftr__t">
 <div>
 <img class="ftr__lg ftr__lg--img" src="https://bluewing.brandismtechnologies.in/wp-content/uploads/2026/06/bh-new-logo.png" alt="Bhaarat Precast" width="450" height="150" decoding="async">
-<p style="max-width:38ch;margin-bottom:26px">A diversified construction group delivering turnkey projects, specialised diaphragm wall foundations and precast solutions across India.</p>
+<p style="max-width:38ch;margin-bottom:26px">BHAARAT Precast — Advancing construction with factory-controlled quality, programme certainty, and faster project execution.</p>
 <nav class="soc" aria-label="Social media">
 <a href="https://www.linkedin.com/company/bluewing-design-construction/" aria-label="LinkedIn"><svg><use href="#i-li"/></svg></a>
 <a href="https://www.facebook.com/profile.php?id=100064056703525" aria-label="Facebook"><svg><use href="#i-fb"/></svg></a>
@@ -1174,18 +1114,6 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 <li><a href="bhaarat-precast.html">Bhaarat Precast</a></li>
 <li><a href="https://bluewing-new-sigma.vercel.app/about-bluewing-dcpl.html" target="_blank" rel="noopener">About the group</a></li>
 <li><a href="https://bluewing-new-sigma.vercel.app/careers.html" target="_blank" rel="noopener">Careers</a></li>
-</ul>
-</div>
-<div>
-<h4>Explore</h4>
-<ul>
-<li><a href="https://bluewing-new-sigma.vercel.app/projects.html" target="_blank" rel="noopener">All projects</a></li>
-<li><a href="https://bluewing-new-sigma.vercel.app/projects-ongoing.html" target="_blank" rel="noopener">Ongoing projects</a></li>
-<li><a href="https://bluewing-new-sigma.vercel.app/projects-completed.html" target="_blank" rel="noopener">Completed projects</a></li>
-<li><a href="https://bluewing-new-sigma.vercel.app/clients.html" target="_blank" rel="noopener">Our clients</a></li>
-<li><a href="https://bluewing-new-sigma.vercel.app/quality-standards.html" target="_blank" rel="noopener">Quality standards</a></li>
-<li><a href="https://bluewing-new-sigma.vercel.app/safety-standards.html" target="_blank" rel="noopener">Safety standards</a></li>
-<li><a href="https://bluewing-new-sigma.vercel.app/blog.html" target="_blank" rel="noopener">Blog</a></li>
 </ul>
 </div>
 <div>

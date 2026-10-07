@@ -6,7 +6,7 @@ const MAX_RESUME_BYTES = 5 * 1024 * 1024;
 const ALLOWED_RESUME_EXT = /\.(pdf|docx?)$/i;
 
 const REQUIRED_FIELDS = {
-  'project-enquiry': ['name', 'email', 'phone', 'interest'],
+  'project-enquiry': ['name', 'email', 'phone'],
   'vendor-registration': ['company', 'name', 'email', 'phone', 'category', 'city'],
   'job-application': ['name', 'email', 'phone', 'company', 'applyFor'],
   'sygnific-enquiry': ['name', 'company', 'email', 'phone', 'message'],
