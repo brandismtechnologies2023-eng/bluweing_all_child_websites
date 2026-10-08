@@ -874,6 +874,12 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 .adv__l svg{width:15px;height:15px;color:var(--accent);flex:none;margin-top:5px}
 @media(max-width:900px){.prow{grid-template-columns:1fr}.prow:nth-child(even) .prow__fig{order:0}
   .adv__l{grid-template-columns:1fr}}
+.cust{margin-top:clamp(56px,7vw,104px);padding-top:clamp(56px,7vw,104px);border-top:1px solid var(--line)}
+.cust h2{font-size:clamp(1.5rem,2.6vw,2.1rem);margin-bottom:28px}
+.cust__g{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,40px)}
+.cust__i img{width:100%;aspect-ratio:4/3;object-fit:contain;background:var(--concrete);border-radius:var(--r);padding:20px}
+.cust__i figcaption{margin-top:14px;font-size:1.05rem;font-weight:600}
+@media(max-width:700px){.cust__g{grid-template-columns:1fr}}
 
 /* ── Project photo block ───────────────────────────────── */
 .shots{padding-block:0 var(--sec-y)}
@@ -1098,6 +1104,14 @@ h1,h2,h3,h4{margin:0;font-family:var(--f-display);font-weight:600;letter-spacing
 </div>
 <div class="prow__fig"><img decoding="async" src="https://bluewing.brandismtechnologies.in/wp-content/uploads/2026/06/new-U-Drains.png" alt="U Drains — Bhaarat Precast" loading="lazy" width="700" height="525"></div>
 </article>
+<div class="cust">
+<p class="prow__code">Product 07</p>
+<h2>Customized Products</h2>
+<div class="cust__g">
+<figure class="cust__i"><img decoding="async" src="https://faak0js5bca1hkm3.public.blob.vercel-storage.com/uploads/1791452142783-tdlcus-Boundary_wall-SFq9oXz0URwMlSu7xtu7x14vmKnQLR.webp" alt="Boundary wall — Bhaarat Precast" loading="lazy" width="700" height="525"><figcaption>Boundary wall</figcaption></figure>
+<figure class="cust__i"><img decoding="async" src="https://faak0js5bca1hkm3.public.blob.vercel-storage.com/uploads/1791452143439-z48tqx-Road_barrier-oIY656XAxKd5IXSWgZ3mcK3TdlV90a.webp" alt="Road barrier — Bhaarat Precast" loading="lazy" width="700" height="525"><figcaption>Road barrier</figcaption></figure>
+</div>
+</div>
 </div>
 </section>
 
